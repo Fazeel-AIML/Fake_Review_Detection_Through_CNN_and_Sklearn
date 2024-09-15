@@ -38,4 +38,4 @@ pip install requirements.txt
 ```
 
 For Demo
-![App Demo](check.gif)
+![App Demo](Check.gif)
