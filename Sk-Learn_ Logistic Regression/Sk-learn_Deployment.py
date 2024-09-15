@@ -5,12 +5,14 @@ from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from sklearn.linear_model import LogisticRegression
 import pickle
+import nltk
 from sklearn.feature_extraction.text import TfidfVectorizer
 import matplotlib.pyplot as plt
 from PyQt5.QtWidgets import QApplication, QDialog, QPlainTextEdit, QLabel, QPushButton, QGridLayout, QComboBox
 from PyQt5.QtGui import QFont, QPixmap
 from PyQt5.QtCore import Qt 
 from PyQt5.uic import loadUi
+nltk.download('stopwords')
 
 # LOAD THE MODEL AND VECTORIZER
 with open('Sk-Learn_ Logistic Regression\Model.pkl', 'rb') as f:
@@ -18,8 +20,6 @@ with open('Sk-Learn_ Logistic Regression\Model.pkl', 'rb') as f:
 with open('Sk-Learn_ Logistic Regression\Vectorizer.pkl', 'rb') as f:
     vectorizer = pickle.load(f)
 
-# FOR NLTK
-# nltk.download('stopwords')
 
 # TEXT PREPROCESSING
 sw = set(stopwords.words('english'))

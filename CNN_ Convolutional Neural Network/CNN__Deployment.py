@@ -3,9 +3,11 @@ import numpy as np
 from textblob import TextBlob
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
-from tensorflow.keras.models import load_model
+from keras.models import load_model
 import pickle
-from tensorflow.keras.preprocessing.sequence import pad_sequences
+from keras.preprocessing.sequence import pad_sequences
+from keras.preprocessing.text import tokenizer_from_json
+import json
 import matplotlib.pyplot as plt
 from PyQt5.QtWidgets import QApplication, QDialog, QPlainTextEdit, QLabel, QPushButton, QGridLayout, QComboBox
 from PyQt5.QtGui import QFont, QPixmap
@@ -14,6 +16,8 @@ from PyQt5.uic import loadUi
 
 # LOAD THE CNN MODEL AND TOKENIZER
 model = load_model('CNN_ Convolutional Neural Network\Model.h5')
+
+# Attempt to load the tokenizer from pickle
 with open('CNN_ Convolutional Neural Network\\tokenizer.pkl', 'rb') as f:
     tokenizer = pickle.load(f)
 
@@ -22,7 +26,6 @@ with open('CNN_ Convolutional Neural Network\\tokenizer.pkl', 'rb') as f:
 
 # TEXT PREPROCESSING
 sw = set(stopwords.words('english'))
-
 
 def text_preprocessing(text):
     txt = TextBlob(text)
@@ -43,7 +46,6 @@ def text_preprocessing(text):
         stemmed.append(token)
 
     return " ".join(stemmed)
-
 
 # TEXT CLASSIFICATION
 def text_classification():
@@ -68,12 +70,12 @@ def text_classification():
         result_label.setStyleSheet(f"QLabel {{ color: {result_color}; }}")
 
     # Load the images and create QPixmap objects
-    result_evaluation_image = QPixmap('Screenshots\cnn (1).png')
-    confusion_matrix_image = QPixmap('Screenshots\cnn (2).png')
+    result_evaluation_image = QPixmap('Screenshots\\cnn (1).png')
+    confusion_matrix_image = QPixmap('Screenshots\\cnn (2).png')
 
     # Adjust the size of the images
-    result_evaluation_image = result_evaluation_image.scaled(1080, 300,Qt.AspectRatioMode.KeepAspectRatio, Qt.SmoothTransformation)
-    confusion_matrix_image = confusion_matrix_image.scaled(1080, 300,Qt.AspectRatioMode.KeepAspectRatio, Qt.SmoothTransformation)
+    result_evaluation_image = result_evaluation_image.scaled(1080, 300, Qt.AspectRatioMode.KeepAspectRatio, Qt.SmoothTransformation)
+    confusion_matrix_image = confusion_matrix_image.scaled(1080, 300, Qt.AspectRatioMode.KeepAspectRatio, Qt.SmoothTransformation)
 
     # Create QLabel objects for the images
     result_evaluation_label = QLabel()
@@ -106,7 +108,6 @@ def text_classification():
 
     # Set the layout for the dialog
     dialog.setLayout(layout)
-
 
 if __name__ == "__main__":
     # Create the application instance
